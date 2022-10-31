@@ -1,0 +1,1 @@
+COPY towns(name) FROM '/docker-entrypoint-initdb.d/towns.csv';

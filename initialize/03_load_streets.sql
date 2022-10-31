@@ -1,0 +1,1 @@
+COPY streets(name) FROM '/docker-entrypoint-initdb.d/streets.csv' CSV HEADER;

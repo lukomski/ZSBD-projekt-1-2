@@ -1,0 +1,1 @@
+COPY voivodeships(name) FROM '/docker-entrypoint-initdb.d/voivodeships.csv' CSV HEADER;

@@ -1,0 +1,1 @@
+COPY countries(name) FROM '/docker-entrypoint-initdb.d/countries.csv';
