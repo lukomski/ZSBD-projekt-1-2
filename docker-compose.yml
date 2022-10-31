@@ -1,0 +1,13 @@
+version: "2.0"
+services:
+  db:
+    container_name: vrl_db
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./volumes/dbStorage:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "vrl"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
