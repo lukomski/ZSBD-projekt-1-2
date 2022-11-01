@@ -9,23 +9,30 @@ DO $$
         package_id BIGINT;
         package_type_id BIGINT;
         weight FLOAT;
+        order_date timestamp;
     BEGIN
     -- Create orders
-    FOR order_r IN 1..100
-        LOOP   
+    FOR order_r IN 1..100000
+        LOOP 
+            if MOD(order_r, 1000) = 0 then
+                RAISE NOTICE 'order_r: %', order_r;
+            end if;
             INSERT INTO orders (id) VALUES (DEFAULT) RETURNING id INTO order_id;
             -- RAISE NOTICE 'order_id: %', order_id;
         
             -- Create order data
-            FOR order_data_r IN 1..10
+            FOR order_data_r IN 1..100
                 LOOP
                     sender_id = (SELECT floor(random() * 10 + 1));
                     receiver_id = (SELECT floor(random() * 10 + 1));
                     author_id = (SELECT floor(random() * 10 + 1));
                     od_description = CONCAT('Order ', order_r, ' description ', order_data_r);
+                    order_date = (select timestamp '2014-01-10 20:00:00' +
+                            random() * (timestamp '2014-01-20 20:00:00' -
+                            timestamp '2014-01-10 10:00:00'));
 
-                    INSERT INTO order_data (description, sender_id, receiver_id, author_id) VALUES
-                        (od_description, sender_id, receiver_id, author_id) RETURNING id INTO order_data_id;
+                    INSERT INTO order_data (description, date, sender_id, receiver_id, author_id) VALUES
+                        (od_description, order_date, sender_id, receiver_id, author_id) RETURNING id INTO order_data_id;
 
                     INSERT INTO order_data_orders (order_data_id, order_id) VALUES (order_data_id, order_id);
                 END LOOP;

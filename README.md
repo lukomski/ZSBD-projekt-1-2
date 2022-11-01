@@ -1,3 +1,5 @@
+## See sprawozdanie.pdf file
+
 ## Run database
 
 ```
@@ -26,4 +28,11 @@ docker exec -it vrl_db psql vrl postgres
 
 ```
 \d packageTypesPackages
+```
+
+### Usefull commands
+
+```
+\timing
+\pset pager off
 ```

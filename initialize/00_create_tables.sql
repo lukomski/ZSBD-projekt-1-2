@@ -81,6 +81,7 @@ DROP TABLE iF EXISTS order_data;
 CREATE TABLE order_data (
     id           BIGSERIAL PRIMARY KEY,
     description  TEXT,
+    date         TIMESTAMP,
     sender_id    BIGINT NOT NULL,
     receiver_id  BIGINT NOT NULL,
     author_id    BIGINT NOT NULL,

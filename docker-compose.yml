@@ -11,3 +11,4 @@ services:
     environment:
       POSTGRES_DB: "vrl"
       POSTGRES_HOST_AUTH_METHOD: "trust"
+    shm_size: 1g
