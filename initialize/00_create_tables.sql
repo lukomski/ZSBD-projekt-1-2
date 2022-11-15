@@ -77,14 +77,23 @@ CREATE TABLE clients (
 	    REFERENCES addresses(id)
 );
 
+DROP TABLE iF EXISTS orders;
+CREATE TABLE orders (
+    id        BIGSERIAL PRIMARY KEY
+);
+
 DROP TABLE iF EXISTS order_data;
 CREATE TABLE order_data (
     id           BIGSERIAL PRIMARY KEY,
+    order_id     BIGINT NOT NULL,
     description  TEXT,
     date         TIMESTAMP,
     sender_id    BIGINT NOT NULL,
     receiver_id  BIGINT NOT NULL,
     author_id    BIGINT NOT NULL,
+    CONSTRAINT fk_order
+      FOREIGN KEY(order_id) 
+	    REFERENCES orders(id),
     CONSTRAINT fk_sender
       FOREIGN KEY(sender_id) 
 	    REFERENCES clients(id),
@@ -94,11 +103,6 @@ CREATE TABLE order_data (
     CONSTRAINT fk_author
       FOREIGN KEY(author_id) 
 	    REFERENCES users(id)
-);
-
-DROP TABLE iF EXISTS orders;
-CREATE TABLE orders (
-    id        BIGSERIAL PRIMARY KEY
 );
 
 DROP TABLE iF EXISTS package_types;
@@ -133,17 +137,4 @@ CREATE TABLE order_data_packages (
     CONSTRAINT fk_package
       FOREIGN KEY(package_id) 
 	    REFERENCES packages(id)
-);
-
-DROP TABLE iF EXISTS order_data_orders;
-CREATE TABLE order_data_orders (
-    id            BIGSERIAL PRIMARY KEY,
-    order_data_id BIGINT NOT NULL,
-    order_id    BIGINT NOT NULL,
-    CONSTRAINT fk_order_data
-      FOREIGN KEY(order_data_id) 
-	    REFERENCES order_data(id),
-    CONSTRAINT fk_order
-      FOREIGN KEY(order_id) 
-	    REFERENCES orders(id)
 );

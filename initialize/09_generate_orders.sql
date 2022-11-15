@@ -1,3 +1,4 @@
+
 DO $$
     DECLARE
         od_description VARCHAR;
@@ -12,7 +13,7 @@ DO $$
         order_date timestamp;
     BEGIN
     -- Create orders
-    FOR order_r IN 1..100000
+    FOR order_r IN 1..100
         LOOP 
             if MOD(order_r, 1000) = 0 then
                 RAISE NOTICE 'order_r: %', order_r;
@@ -21,7 +22,7 @@ DO $$
             -- RAISE NOTICE 'order_id: %', order_id;
         
             -- Create order data
-            FOR order_data_r IN 1..100
+            FOR order_data_r IN 1..10
                 LOOP
                     sender_id = (SELECT floor(random() * 10 + 1));
                     receiver_id = (SELECT floor(random() * 10 + 1));
@@ -31,10 +32,8 @@ DO $$
                             random() * (timestamp '2014-01-20 20:00:00' -
                             timestamp '2014-01-10 10:00:00'));
 
-                    INSERT INTO order_data (description, date, sender_id, receiver_id, author_id) VALUES
-                        (od_description, order_date, sender_id, receiver_id, author_id) RETURNING id INTO order_data_id;
-
-                    INSERT INTO order_data_orders (order_data_id, order_id) VALUES (order_data_id, order_id);
+                    INSERT INTO order_data (order_id, description, date, sender_id, receiver_id, author_id) VALUES
+                        (order_id, od_description, order_date, sender_id, receiver_id, author_id) RETURNING id INTO order_data_id;
                 END LOOP;
 
             -- Create packages
