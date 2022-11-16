@@ -138,3 +138,14 @@ CREATE TABLE order_data_packages (
       FOREIGN KEY(package_id) 
 	    REFERENCES packages(id)
 );
+
+DROP TABLE IF EXISTS users_history;
+CREATE TABLE users_history (
+  id              BIGSERIAL PRIMARY KEY,
+  user_id        BIGINT NOT NULL,
+  description     TEXT,
+  date         TIMESTAMP,
+  CONSTRAINT fk_users
+      FOREIGN KEY(user_id) 
+	    REFERENCES users(id)
+);

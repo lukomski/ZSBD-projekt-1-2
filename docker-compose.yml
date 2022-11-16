@@ -5,9 +5,9 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    restart: unless-stopped
     volumes:
       - ./volumes/dbStorage:/var/lib/postgresql/data
+      - ./volumes/backups:/backups
     environment:
       POSTGRES_DB: "vrl"
       POSTGRES_HOST_AUTH_METHOD: "trust"
