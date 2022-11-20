@@ -30,7 +30,7 @@ CREATE TABLE postal_offices (
     id        BIGSERIAL PRIMARY KEY,
     zip_code  TEXT,
     town_id   BIGINT NOT NULL,
-    CONSTRAINT fk_town
+    CONSTRAINT fk_po_town
       FOREIGN KEY(town_id) 
 	    REFERENCES towns(id)
 );

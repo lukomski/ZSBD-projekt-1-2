@@ -1,14 +1,30 @@
 version: "2.0"
 services:
-  db:
-    container_name: vrl_db
+  psql:
+    container_name: vrl_psql
     build:
       context: .
       dockerfile: ./Dockerfile
     volumes:
-      - ./volumes/dbStorage:/var/lib/postgresql/data
-      - ./volumes/backups:/backups
+      - ./volumes/psql/dbStorage:/var/lib/postgresql/data
+      - ./volumes/psql/backups:/backups
+    ports:
+      - 5434:1432
     environment:
       POSTGRES_DB: "vrl"
       POSTGRES_HOST_AUTH_METHOD: "trust"
     shm_size: 1g
+  mssql:
+    container_name: vrl_mssql
+    build:
+      context: .
+      dockerfile: ./Dockerfile.mssql
+    # command: sleep 999999999
+    volumes:
+      - ./volumes/mssql:/host_files
+    shm_size: 1g
+    ports:
+      - "1433:1433" # Externa:Internal
+    environment:
+      - SA_PASSWORD=3ywhNTJ0oK?DXto
+      - ACCEPT_EULA=Y
